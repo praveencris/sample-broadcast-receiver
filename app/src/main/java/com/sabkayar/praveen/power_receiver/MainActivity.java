@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         this.registerReceiver(mAnotherBroadcastReceiver, intentFilter);
 
 
+        //Register receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCustomBroadcastReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
+
     }
 
     @Override
@@ -58,8 +61,5 @@ public class MainActivity extends AppCompatActivity {
     public void sendCustomBroadcast(View view) {
         Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST);
         LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent);
-
-        //Register receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mCustomBroadcastReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
     }
 }
