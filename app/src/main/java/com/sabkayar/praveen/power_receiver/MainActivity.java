@@ -2,6 +2,7 @@ package com.sabkayar.praveen.power_receiver;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import com.sabkayar.praveen.sample_broadcast_receiver.R;
 public class MainActivity extends AppCompatActivity {
 
     private CustomBroadcastReceiver mCustomBroadcastReceiver = new CustomBroadcastReceiver();
+    private AnotherBroadcastReceiver mAnotherBroadcastReceiver = new AnotherBroadcastReceiver();
     private static final String ACTION_CUSTOM_BROADCAST =
             BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
 
@@ -25,9 +27,17 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
 
         // Register the receiver using the activity context.
         this.registerReceiver(mCustomBroadcastReceiver, intentFilter);
+
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+
+        // Register the receiver using the activity context.
+        this.registerReceiver(mAnotherBroadcastReceiver, intentFilter);
 
 
     }
@@ -36,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         //Unregister the receiver
         this.unregisterReceiver(mCustomBroadcastReceiver);
+
+        this.unregisterReceiver(mAnotherBroadcastReceiver);
 
         //Unregister receiver
         LocalBroadcastManager.getInstance(this)
